@@ -20,7 +20,6 @@ const TableUsers = (props) =>{
             setListUsers(res.data)
             setTotalUsers(res.total)
             setTotalPages(res.total_pages)
-            console.log(res)
         }
     }
 
