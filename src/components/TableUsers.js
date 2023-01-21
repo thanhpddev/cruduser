@@ -45,6 +45,7 @@ const TableUsers = (props) =>{
 
     const getUsers = async (page)=>{
         let res = await fetchAllUsers(page);
+        
         if(res && res.data){
             setListUsers(res.data)
             setTotalUsers(res.total)
@@ -68,6 +69,12 @@ const TableUsers = (props) =>{
         setDataUserDelete(user)
     }
 
+    //click btn delete
+    const handleDeleteUserFromModal = (user)=>{
+        let cloneListUsers = _.cloneDeep(listUsers);
+        cloneListUsers = cloneListUsers.filter(item => item.id !== user.id)
+        setListUsers(cloneListUsers)
+    }
     return (
     <>
          <div className="my-3 add-new">
@@ -129,7 +136,7 @@ const TableUsers = (props) =>{
 
         <ModalEditUser show = {isShowModalEdit} handleClose={handleClose} dataUserEdit={dataUserEdit} handleUpdateTable = {handleUpdateTable} handleEditUsersFromModal={handleEditUsersFromModal}/>
 
-        <ModalConfirm show = {isShowModalDelete} handleClose={handleClose} dataUserDelete={dataUserDelete}/>
+        <ModalConfirm show = {isShowModalDelete} handleClose={handleClose} dataUserDelete={dataUserDelete} handleDeleteUserFromModal={handleDeleteUserFromModal} />
     </>
 )
 }
