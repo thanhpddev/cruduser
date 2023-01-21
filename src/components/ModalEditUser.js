@@ -32,9 +32,9 @@ const ModalEditUser = (props)=>{
 
     return (
        
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add new user</Modal.Title>
+                    <Modal.Title>Edit user</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="body-add-new">
