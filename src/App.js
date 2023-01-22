@@ -5,6 +5,7 @@ import Header from './components/Header';
 import TableUsers from './components/TableUsers';
 
 import 'react-toastify/dist/ReactToastify.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.scss';
 
 function App() {
