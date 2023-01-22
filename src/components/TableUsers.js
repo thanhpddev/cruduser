@@ -29,6 +29,9 @@ const TableUsers = (props) =>{
 
     const [keyword, setKeyword] = useState("");
 
+    //export
+    const [dataExport, setDataExport] = useState([])
+
     //handle asc/desc
     const handleSort = (sortBy,sortField ) => {
         setSortBy(sortBy);
@@ -111,12 +114,28 @@ const TableUsers = (props) =>{
         }
     },1000)
 
-    const csvData = [
-        ["firstname", "lastname", "email"],
-        ["Ahmed", "Tomi", "ah@smthing.co.com"],
-        ["Raed", "Labes", "rl@smthing.co.com"],
-        ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-    ];
+ 
+
+    const getUsersExport = (event, done) => {
+        let result = [
+            ['Id','Email','First name', 'Last name'],
+        ];
+        if(listUsers && listUsers.length > 0){
+            listUsers.map((item, index) => {
+                let arr=[]
+                for(let key in item){
+                    if(key !== 'avatar'){
+                        arr[arr.length] = item[key];
+                    }
+                }
+
+                result.push(arr)
+            })
+
+            setDataExport(result);
+            done();
+        }
+    }
 
     return (
     <>
@@ -126,7 +145,14 @@ const TableUsers = (props) =>{
                 <label htmlFor='test' className='btn btn-warning'><i className="fa-solid fa-file-import"></i> Import</label>
                 <input id="test" type="file" hidden />
 
-                <CSVLink data={csvData} filename={"users.csv"} className="btn btn-primary" ><i className="fa-solid fa-file-export"></i> Export</CSVLink>
+                <CSVLink 
+                    className="btn btn-primary" 
+                    data={dataExport} 
+                    filename={"users.csv"} 
+                    asyncOnClick={true}
+                    onClick={getUsersExport}
+                ><i className="fa-solid fa-file-export"></i> Export</CSVLink>
+
                 <button className="btn btn-success" onClick={()=>setIsShowModalAddNew(true)}><i className="fa-solid fa-circle-plus"></i> Add new</button>
             </div>
 

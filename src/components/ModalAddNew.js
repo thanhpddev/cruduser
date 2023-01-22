@@ -19,7 +19,7 @@ const ModalAddNew = (props)=>{
             setName('');
             setJob('');
             toast.success('A user is created successfully');
-            handleUpdateTable({first_name: name, id: res.id});
+            handleUpdateTable({id: res.id, first_name: name});
         }
         else{
             toast.error('An error...')
