@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
 import _, { debounce } from 'lodash';
+import { CSVLink } from "react-csv";
 
 import { fetchAllUsers } from '../services/UserService';
 import ModalAddNew from './ModalAddNew';
 import ModalEditUser from './ModalEditUser';
 import ModalConfirm from './ModalConfirm';
+
 
 import './TableUsers.scss';
 
@@ -109,11 +111,26 @@ const TableUsers = (props) =>{
         }
     },1000)
 
+    const csvData = [
+        ["firstname", "lastname", "email"],
+        ["Ahmed", "Tomi", "ah@smthing.co.com"],
+        ["Raed", "Labes", "rl@smthing.co.com"],
+        ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+    ];
+
     return (
     <>
         <div className="my-3 add-new">
             <span><b>List Users:</b></span>
-            <button className="btn btn-success" onClick={()=>setIsShowModalAddNew(true)}>Add new user</button>
+            <div className="group-btns">
+                <label htmlFor='test' className='btn btn-warning'><i className="fa-solid fa-file-import"></i> Import</label>
+                <input id="test" type="file" hidden />
+
+                <CSVLink data={csvData} filename={"users.csv"} className="btn btn-primary" ><i className="fa-solid fa-file-export"></i> Export</CSVLink>
+                <button className="btn btn-success" onClick={()=>setIsShowModalAddNew(true)}><i className="fa-solid fa-circle-plus"></i> Add new</button>
+            </div>
+
+            
         </div>
         <div className='search col-4 my-3'>
             <input className='form-control' type="text" placeholder='Search user by email...' onChange={(event)=>handleSearch(event)} />
