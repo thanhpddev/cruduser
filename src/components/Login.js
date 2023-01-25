@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { loginAPI } from "../services/UserService";
 
 function Login() {
 
@@ -6,6 +8,17 @@ function Login() {
     const [password,setPassword] = useState("");
     const [isShowPassword,setIsShowPassword] = useState(false);
 
+    const handleLogin = async () => {
+        if(!email || !password){
+            toast.error('Email/password is required')
+            return;
+        }
+        let res = await loginAPI('eve.holt@reqres.in', password)
+        console.log(res)
+        if(res && res.token){
+            localStorage.setItem('token', res.token)
+        }
+    }
 
     return ( 
         <>
@@ -14,7 +27,7 @@ function Login() {
                 <div className="text">Email or username</div>
 
                 <div className="input-wrap">
-                    <input type="text" placeholder="Email or username..." value={email} 
+                    <input type="text" placeholder="eve.holt@reqres.in" value={email} 
                     onChange={event=>setEmail(event.target.value)}
                     />
                 </div>
@@ -28,11 +41,12 @@ function Login() {
                 <button 
                 className={email && password ? 'active' : ''}
                 disabled={email && password ? false : true}
+                onClick={()=>handleLogin()}
                 >
                     Login
                 </button>
                 <div className="back">
-                <i class="fa-solid fa-chevron-left"></i> Go back
+                <i className="fa-solid fa-chevron-left"></i> Go back
                 </div>
             </div>
         </>
