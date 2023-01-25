@@ -5,6 +5,7 @@ import { Route, Routes, Link } from 'react-router-dom';
 import Header from './components/Header';
 import TableUsers from './components/TableUsers';
 import Home from './components/Home';
+import Login from './components/Login';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/users" element={<TableUsers />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </Container>
         
