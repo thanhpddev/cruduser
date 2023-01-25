@@ -12,7 +12,7 @@ function Home() {
                 <li>5. Hiển thị user.</li>
                 <li>6. Tìm kiếm user theo email.</li>
                 <li>7. Sắp xếp user.</li>
-                <li>8. import/export user từ file .csv</li>
+                <li>8. Import/export user từ file .csv</li>
             </ul>
         </div>
      );
