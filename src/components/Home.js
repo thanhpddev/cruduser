@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event"
 function Home() {
     return ( 
         <div className="mt-4">
-            <p>Sử dụng API từ trang web https://reqres.in/.<br/>Sử dụng thư viện React để tạo website cơ bản gồm các chức năng:</p>
+            <p>Sử dụng API từ trang web <a href="https://reqres.in/" target="_blank">https://reqres.in/</a><br/>Sử dụng thư viện React để tạo website cơ bản gồm các chức năng:</p>
             <ul>
                 <li>1. Đăng nhập.</li>
                 <li>2. Thêm user.</li>

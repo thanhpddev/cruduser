@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginAPI } from "../services/UserService";
+
+import { UserContext } from '../context/userContext';
 
 function Login() {
 
     const navigate = useNavigate()
+
+    const { loginContext } = useContext(UserContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,13 +18,13 @@ function Login() {
     const [isActive, setIsActive] = useState('active');
     const [loadingAPI, setLoadingAPI] = useState(false);
 
-    useEffect(()=>{
-        let token = localStorage.getItem('token')
-        if(token){
-            navigate("/")
-        }
+    // useEffect(()=>{
+    //     let token = localStorage.getItem('token')
+    //     if(token){
+    //         navigate("/")
+    //     }
 
-    },[])
+    // },[])
 
     const handleLogin = async () => {
         setIsShowButton(!isShowButton)
@@ -34,7 +38,7 @@ function Login() {
         let res = await loginAPI(email, password)
         
         if(res && res.token){
-            localStorage.setItem('token', res.token)
+            loginContext(email, res.token);
             navigate("/")
         }else{
             //error
@@ -45,6 +49,10 @@ function Login() {
         setLoadingAPI(false)
         setIsShowButton(false)
         setIsActive('active')
+    }
+
+    const handleGoBack = () => {
+        navigate("/");
     }
 
     return ( 
@@ -74,7 +82,8 @@ function Login() {
                     &nbsp; Login
                 </button>
                 <div className="back">
-                <i className="fa-solid fa-chevron-left"></i> Go back
+                    <i className="fa-solid fa-angles-left"></i>
+                    <span onClick={()=>handleGoBack()}>&nbsp; Go back</span>
                 </div>
             </div>
         </>

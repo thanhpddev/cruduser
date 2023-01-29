@@ -5,11 +5,16 @@ import logo from '../assets/img/logo.png';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { useContext } from 'react';
+
+import { UserContext } from '../context/userContext';
 
 const Header = (props) =>{
+    const { logout, user } = useContext(UserContext);
     const navigate = useNavigate();
+
     const handleLogout = () =>{
-        localStorage.removeItem('token');
+        logout();
         navigate("/");
         toast.success('Log out success!')
     }
@@ -20,14 +25,20 @@ const Header = (props) =>{
             <Navbar.Brand href="/"><img src={logo} width="30" height="30" className='d-inline-block align-top' alt="logo" /><span>Manage Users</span></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                    <NavLink to='/' className='nav-link'>Home</NavLink>
-                    <NavLink to='/users' className='nav-link'>Manage User</NavLink>
-                </Nav>
-                <Nav>
-                    {localStorage.getItem('token')=== null ? <NavLink to='/login' className='nav-link'>Login</NavLink> :
-                    <Nav.Link className='nav-link' onClick={()=>handleLogout()}>Logout</Nav.Link>}
-                </Nav>
+                {(user && user.auth || window.location.pathname === '/') &&
+                    <>
+                        <Nav className="me-auto">
+                            <NavLink to='/' className='nav-link'>Home</NavLink>
+                            <NavLink to='/users' className='nav-link'>Manage User</NavLink>
+                        </Nav>
+                        
+                        <Nav>
+                            {user && user.email && <span className='nav-link'>Welcome {user.email}</span>}
+                            {user && user.auth === true ? <Nav.Link className='nav-link' onClick={()=>handleLogout()}>Logout</Nav.Link> :
+                            <NavLink to='/login' className='nav-link'>Login</NavLink>}
+                        </Nav>
+                    </>
+                }
             </Navbar.Collapse>
         </Container>
     </Navbar>
