@@ -35,7 +35,7 @@ function Login() {
             return;
         }
         setLoadingAPI(true)
-        let res = await loginAPI(email, password)
+        let res = await loginAPI(email.trim(), password)
         
         if(res && res.token){
             loginContext(email, res.token);
@@ -55,6 +55,12 @@ function Login() {
         navigate("/");
     }
 
+    const handlePressEnter = (event)=>{
+        if(event.key === 'Enter'){
+            handleLogin();
+        }
+    }
+
     return ( 
         <>
             <div className="login-container col-12 col-sm-4">
@@ -69,6 +75,7 @@ function Login() {
                 <div className="input-wrap">
                     <input type={isShowPassword === true ? "text" : "password"} placeholder="Password..." value={password}
                     onChange={event=>setPassword(event.target.value)}
+                    onKeyDown = {(event)=>handlePressEnter(event)}
                     />
                     {password && <i className={isShowPassword === true ? "fa-sharp fa-solid fa-eye" : "fa-solid fa-eye-slash" } onClick={()=>setIsShowPassword(!isShowPassword)}></i>}
                 </div>

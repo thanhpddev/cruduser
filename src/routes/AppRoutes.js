@@ -1,5 +1,6 @@
 import { Route, Routes, Link } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
+import NotFound from './NotFound';
 
 import TableUsers from '../components/TableUsers';
 import Home from '../components/Home';
@@ -16,6 +17,7 @@ const AppRoutes = ()=>{
                         <TableUsers />
                     </PrivateRoute>
                 } />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     )

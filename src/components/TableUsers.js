@@ -189,9 +189,9 @@ const TableUsers = (props) =>{
 
     return (
     <>
-        <div className="my-3 add-new">
+        <div className="my-3 add-new d-sm-flex">
             <span><b>List Users:</b></span>
-            <div className="group-btns">
+            <div className="group-btns mt-sm-0 mt-2">
                 <label htmlFor='test' className='btn btn-warning'><i className="fa-solid fa-file-import"></i> Import</label>
                 <input id="test" type="file" hidden onChange={(event)=>hanldeImportSCV(event)} />
 
@@ -208,54 +208,56 @@ const TableUsers = (props) =>{
 
             
         </div>
-        <div className='search col-4 my-3'>
+        <div className='search col-12 col-sm-4 my-3'>
             <input className='form-control' type="text" placeholder='Search user by email...' onChange={(event)=>handleSearch(event)} />
         </div>
-        <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th className='sort-header'>
-                        <div>
-                            <span>ID</span> 
-                            <span>
-                                <i className="fa-solid fa-arrow-down-long" onClick={()=>handleSort('desc','id')}></i>
-                                <i className="fa-solid fa-arrow-up-long" onClick={()=>handleSort('asc','id')}></i>
-                            </span>    
-                        </div>
-                    </th>
-                    <th>Email</th>
-                    <th className='sort-header'>
-                        <div>
-                            <span>First Name</span>
-                            <span>
-                                <i className="fa-solid fa-arrow-down-long" onClick={()=>handleSort('desc','first_name')}></i>
-                                <i className="fa-solid fa-arrow-up-long" onClick={()=>handleSort('asc','first_name')}></i>
-                            </span>
-                        </div>    
-                    </th>
-                    <th>Last Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                { listUsers && listUsers.length >0 &&
-                    listUsers.map((item, index)=>{
-                        return <tr key={`users-${index}`}>
-                            <td>{item.id}</td>
-                            <td>{item.email}</td>
-                            <td>{item.first_name}</td>
-                            <td>{item.last_name}</td>
-                            <td>
-                                <button className='btn btn-warning' onClick={()=>handleEditUser(item)}>Edit</button>
-                                <button className='btn btn-danger mx-3' onClick={()=>handeDeleteUser(item)}>Delete</button>
-                            </td>
-                        </tr>
-                    })
-                }
-                
-                
-            </tbody>
-        </Table>
+        <div className='customize-table'>
+            <Table striped bordered hover className='col-lg'>
+                <thead>
+                    <tr>
+                        <th className='sort-header'>
+                            <div>
+                                <span>ID</span> 
+                                <span>
+                                    <i className="fa-solid fa-arrow-down-long" onClick={()=>handleSort('desc','id')}></i>
+                                    <i className="fa-solid fa-arrow-up-long" onClick={()=>handleSort('asc','id')}></i>
+                                </span>    
+                            </div>
+                        </th>
+                        <th>Email</th>
+                        <th className='sort-header'>
+                            <div>
+                                <span>First Name</span>
+                                <span>
+                                    <i className="fa-solid fa-arrow-down-long" onClick={()=>handleSort('desc','first_name')}></i>
+                                    <i className="fa-solid fa-arrow-up-long" onClick={()=>handleSort('asc','first_name')}></i>
+                                </span>
+                            </div>    
+                        </th>
+                        <th>Last Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    { listUsers && listUsers.length >0 &&
+                        listUsers.map((item, index)=>{
+                            return <tr key={`users-${index}`}>
+                                <td>{item.id}</td>
+                                <td>{item.email}</td>
+                                <td>{item.first_name}</td>
+                                <td>{item.last_name}</td>
+                                <td>
+                                    <button className='btn btn-warning' onClick={()=>handleEditUser(item)}>Edit</button>
+                                    <button className='btn btn-danger mx-3' onClick={()=>handeDeleteUser(item)}>Delete</button>
+                                </td>
+                            </tr>
+                        })
+                    }
+                    
+                    
+                </tbody>
+            </Table>
+        </div>
         <ReactPaginate
             breakLabel="..."
             nextLabel="next >"
