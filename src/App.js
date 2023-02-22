@@ -10,9 +10,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.scss';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 
 function App() {
+
+  const dataUserRedux = useSelector(state =>state.user.account)
+  console.log('account ', dataUserRedux)
 
   const { user, loginContext } = useContext(UserContext);
 
