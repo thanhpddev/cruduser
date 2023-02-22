@@ -1,30 +1,25 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginAPI } from "../services/UserService";
+import { useDispatch, useSelector } from "react-redux";
 
-import { UserContext } from '../context/userContext';
+import { handleLoginRedux } from '../redux/actions/userAction';
 
 function Login() {
-
-    const navigate = useNavigate()
-
-    const { loginContext } = useContext(UserContext);
+    
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [isShowButton, setIsShowButton] = useState(false);
     const [isActive, setIsActive] = useState('active');
-    const [loadingAPI, setLoadingAPI] = useState(false);
+    
+    const isLoading = useSelector(state=>state.user.isLoading);
+    const account = useSelector(state=>state.user.account);
+    console.log('isLoading', isLoading)
 
-    // useEffect(()=>{
-    //     let token = localStorage.getItem('token')
-    //     if(token){
-    //         navigate("/")
-    //     }
-
-    // },[])
 
     const handleLogin = async () => {
         setIsShowButton(!isShowButton)
@@ -34,19 +29,9 @@ function Login() {
             toast.error('Email/password is required')
             return;
         }
-        setLoadingAPI(true)
-        let res = await loginAPI(email.trim(), password)
-        
-        if(res && res.token){
-            loginContext(email, res.token);
-            navigate("/")
-        }else{
-            //error
-            if(res && res.status === 400){
-                toast.error(res.data.error)
-            }
-        }
-        setLoadingAPI(false)
+
+        dispatch(handleLoginRedux(email,password));
+
         setIsShowButton(false)
         setIsActive('active')
     }
@@ -60,6 +45,12 @@ function Login() {
             handleLogin();
         }
     }
+
+    useEffect(()=>{
+        if(account && account.auth === true){
+            navigate("/");
+        }
+    },[account])
 
     return ( 
         <>
@@ -85,7 +76,7 @@ function Login() {
                 disabled={isShowButton || !email || !password ? true : false}
                 onClick={()=>handleLogin()}
                 >
-                    {loadingAPI && <i className="fa-solid fa-sync fa-spin mr-1"></i>} 
+                    {isLoading && <i className="fa-solid fa-sync fa-spin mr-1"></i>} 
                     &nbsp; Login
                 </button>
                 <div className="back">
